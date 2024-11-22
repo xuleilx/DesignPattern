@@ -22,65 +22,55 @@ Abstract Factory是一种创建型设计模式，提供一个接口，用于创�
 - 扩展不够灵活：需要为每个产品族增加新工厂，无法动态组合产品族。
 
 ```mermaid
-@startuml
-' 设置方向为从上到下
-left to right direction
+classDiagram
+    class GUIFactory {
+        +virtual unique_ptr<Button> createButton() = 0
+        +virtual unique_ptr<TextBox> createTextBox() = 0
+    }
 
-' 抽象工厂
-abstract class AbstractFactory {
-    +CreateProductA()
-    +CreateProductB()
-}
+    class WindowsFactory {
+        +unique_ptr<Button> createButton()
+        +unique_ptr<TextBox> createTextBox()
+    }
 
-' 具体工厂
-class ConcreteFactory1 {
-    +CreateProductA()
-    +CreateProductB()
-}
-class ConcreteFactory2 {
-    +CreateProductA()
-    +CreateProductB()
-}
+    class MacOSFactory {
+        +unique_ptr<Button> createButton()
+        +unique_ptr<TextBox> createTextBox()
+    }
 
-' 抽象产品 A
-abstract class AbstractProductA {
-    +Operation()
-}
-class ProductA1 {
-    +Operation()
-}
-class ProductA2 {
-    +Operation()
-}
+    class Button {
+        +virtual void render() = 0
+    }
 
-' 抽象产品 B
-abstract class AbstractProductB {
-    +Operation()
-}
-class ProductB1 {
-    +Operation()
-}
-class ProductB2 {
-    +Operation()
-}
+    class TextBox {
+        +virtual void render() = 0
+    }
 
-' 类的继承关系
-AbstractFactory <|-- ConcreteFactory1
-AbstractFactory <|-- ConcreteFactory2
+    class WindowsButton {
+        +void render()
+    }
 
-AbstractProductA <|-- ProductA1
-AbstractProductA <|-- ProductA2
+    class MacOSButton {
+        +void render()
+    }
 
-AbstractProductB <|-- ProductB1
-AbstractProductB <|-- ProductB2
+    class WindowsTextBox {
+        +void render()
+    }
 
-' 工厂与产品的关联
-ConcreteFactory1 --> ProductA1
-ConcreteFactory1 --> ProductB1
+    class MacOSTextBox {
+        +void render()
+    }
 
-ConcreteFactory2 --> ProductA2
-ConcreteFactory2 --> ProductB2
+    GUIFactory <|-- WindowsFactory
+    GUIFactory <|-- MacOSFactory
+    Button <|-- WindowsButton
+    Button <|-- MacOSButton
+    TextBox <|-- WindowsTextBox
+    TextBox <|-- MacOSTextBox
 
-@enduml
-
+    WindowsFactory --> WindowsButton
+    WindowsFactory --> WindowsTextBox
+    MacOSFactory --> MacOSButton
+    MacOSFactory --> MacOSTextBox
 ```
