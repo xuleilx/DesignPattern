@@ -20,3 +20,67 @@ Abstract Factory是一种创建型设计模式，提供一个接口，用于创�
 # 缺点
 - 复杂性增加：引入了更多的类和接口。
 - 扩展不够灵活：需要为每个产品族增加新工厂，无法动态组合产品族。
+
+```mermaid
+@startuml
+' 设置方向为从上到下
+left to right direction
+
+' 抽象工厂
+abstract class AbstractFactory {
+    +CreateProductA()
+    +CreateProductB()
+}
+
+' 具体工厂
+class ConcreteFactory1 {
+    +CreateProductA()
+    +CreateProductB()
+}
+class ConcreteFactory2 {
+    +CreateProductA()
+    +CreateProductB()
+}
+
+' 抽象产品 A
+abstract class AbstractProductA {
+    +Operation()
+}
+class ProductA1 {
+    +Operation()
+}
+class ProductA2 {
+    +Operation()
+}
+
+' 抽象产品 B
+abstract class AbstractProductB {
+    +Operation()
+}
+class ProductB1 {
+    +Operation()
+}
+class ProductB2 {
+    +Operation()
+}
+
+' 类的继承关系
+AbstractFactory <|-- ConcreteFactory1
+AbstractFactory <|-- ConcreteFactory2
+
+AbstractProductA <|-- ProductA1
+AbstractProductA <|-- ProductA2
+
+AbstractProductB <|-- ProductB1
+AbstractProductB <|-- ProductB2
+
+' 工厂与产品的关联
+ConcreteFactory1 --> ProductA1
+ConcreteFactory1 --> ProductB1
+
+ConcreteFactory2 --> ProductA2
+ConcreteFactory2 --> ProductB2
+
+@enduml
+
+```
